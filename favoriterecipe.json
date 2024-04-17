@@ -1,0 +1,14 @@
+[
+  {
+    "userId": 0,
+    "recipeId": [0, 1, 2]
+  },
+  {
+    "userId": 1,
+    "recipeId": [1, 2]
+  },
+  {
+    "userId": 2,
+    "recipeId": [0, 1]
+  }
+]
