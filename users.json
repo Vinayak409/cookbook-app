@@ -1,22 +1,17 @@
 [
-  {
-    "userId": 1,
-    "email": "anonymous@hotmail.com",
-    "password": "anonymous"
-  },
+  { "userId": 1, "email": "anonymous@hotmail.com", "password": "anonymous" },
   {
     "userId": 2,
     "email": "newanonymous@hotmail.com",
     "password": "newanonymous"
   },
+  { "userId": 3, "email": "chittora@gmail.com", "password": "chittora" },
+  { "userId": 4, "email": "newuser@gmail.com", "password": "newuser" },
   {
-    "userId": 3,
-    "email": "chittora@gmail.com",
-    "password": "chittora"
+    "userId": 5,
+    "email": "fifthuser@gmail.com",
+    "password": "fifthuser",
+    "id": 5
   },
-  {
-    "userId": 4,
-    "email": "newuser@gmail.com",
-    "password": "newuser"
-  }
+  { "userId": 6, "email": "sixth@gmail.com", "password": "sixth", "id": 6 }
 ]

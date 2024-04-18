@@ -1,26 +1,13 @@
 const express = require("express");
-const { addRecipe } = require("./recipe.service");
-const recipeController = express.Router();
-
 const jwt = require("jsonwebtoken");
 
-const secretKey = "mysecret";
+const { addRecipe, markAsFavRecipe } = require("./recipe.service");
+const validateToken = require("../../middlewares/validateToken.js");
 
-recipeController.post(
-  "/add-recipe",
-  (req, res, next) => {
-    const token = req.header("Authorization").split(" ")[1];
+const recipeController = express.Router();
 
-    jwt.verify(token, secretKey, (err, decoded) => {
-      if (err) {
-        console.error("Token verification failed:", err.message);
-      } else {
-        console.log("Decoded token : ", decoded);
-        next();
-      }
-    });
-  },
-  addRecipe
-);
+recipeController.use(validateToken);
+recipeController.post("/add-recipe", addRecipe);
+recipeController.post("/mark-as-fav-recipe/:recipeId", markAsFavRecipe);
 
 module.exports = recipeController;
