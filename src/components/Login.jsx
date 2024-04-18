@@ -12,7 +12,7 @@ const Login = () => {
       password,
     };
 
-    fetch("http://localhost:9000/login", {
+    fetch("http://localhost:9000/auth/login", {
       method: "POST",
       body: JSON.stringify(formData),
       mode: "cors",

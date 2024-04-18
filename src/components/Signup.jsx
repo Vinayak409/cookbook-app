@@ -14,7 +14,7 @@ const Signup = () => {
 
     // console.log(formData);
 
-    fetch("http://localhost:9000/signup", {
+    fetch("http://localhost:9000/auth/signup", {
       mode: "cors",
       method: "POST",
       headers: { "Content-Type": "application/json" },
