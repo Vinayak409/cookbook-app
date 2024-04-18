@@ -1,7 +1,0 @@
-[
-  { "userId": 0, "recipeIds": [0, 1, 2] },
-  { "userId": 1, "recipeIds": [1, 2] },
-  { "userId": 2, "recipeIds": [0, 1] },
-  { "userId": 3, "recipeIds": [2] },
-  { "userId": 6, "recipeIds": [0, 1, 3] }
-]

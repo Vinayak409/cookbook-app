@@ -22,5 +22,19 @@
     "title": "Fried Rice",
     "img": "https://www.onceuponachef.com/images/2023/12/Fried-Rice-Hero-12.jpg",
     "description": "this is Fried rice"
+  },
+  {
+    "recipeId": 4,
+    "title": "test recipe",
+    "img": "http://w3schools.com",
+    "description": "this is test recipe",
+    "id": 5
+  },
+  {
+    "recipeId": 5,
+    "title": "firstuser recipe",
+    "img": "http://google.com",
+    "description": "this is first user recipe",
+    "id": 6
   }
 ]
