@@ -31,6 +31,15 @@ const signup = (req, res) => {
   const data = fs.readFileSync(absolutePath); // Read the existing JSON file
   const users = JSON.parse(data); // Parse the JSON data into an object
   const newUser = { ...req.body }
+
+  if(users.find((obj) => obj.email === newUser.email && obj.password === newUser.password)){
+    res.status(200).send({
+      message : "user already exists"
+    })
+    return;
+  }
+
+
   users.push(newUser);
   const token = getToken(newUser, secretKey);
   const json = JSON.stringify(users); // Stringify the object back into JSON

@@ -11,16 +11,16 @@ const addRecipe = (req, res) => {
     // file is empty
     fs.writeFileSync(
       absolutePath,
-      JSON.stringify([req.body])
+      JSON.stringify([{...req.body, recipeId: 1}])
     );
-    res.status(201).send("first added recipe");
+    res.status(201).send("added first recipe");
     return;
   }
 
   const data = fs.readFileSync(absolutePath); // Read the existing JSON file
   const recipes = JSON.parse(data); // Parse the JSON data into an object
   console.log(recipes);
-  recipes.push({ ...req.body, id: recipes.length + 1 });
+  recipes.push({ ...req.body, recipeId: recipes.length + 1 });
   const json = JSON.stringify(recipes); // Stringify the object back into JSON
   console.log(json);
   fs.writeFileSync(absolutePath, json); // Write the JSON data to the file
