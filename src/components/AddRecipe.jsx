@@ -3,15 +3,15 @@ import React, { useState } from "react";
 const AddRecipe = () => {
   const [title, setTitle] = useState("");
   const [img, setImg] = useState("");
-  const [desc, setDesc] = useState("");
+  const [description, setDescription] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
     const formData = {
       title,
-      desc,
       img,
+      description,
     };
 
     fetch("http://localhost:9000/recipe/add-recipe", {
@@ -47,7 +47,7 @@ const AddRecipe = () => {
         type="text"
         name="desc"
         placeholder="Enter desc"
-        onChange={(e) => setDesc(e.target.value)}
+        onChange={(e) => setDescription(e.target.value)}
       />
       <input
         type="text"
