@@ -18,7 +18,7 @@ const AddRecipe = () => {
       method: "POST",
       body: JSON.stringify(formData),
       mode: "cors",
-      headers: { "Content-Type": "application/json" },
+      headers: {"Authorization" : "BearerToken " + sessionStorage.getItem("token"), "Content-Type": "application/json" },
     })
       .then((response) => {
         // console.log(response.ok);
