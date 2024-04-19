@@ -1,9 +1,13 @@
-const { log } = require("console");
 const fs = require("fs");
 const { jwtDecode } = require("jwt-decode");
 const path = require("path");
 
 const addRecipe = (req, res) => {
+  const token = req.header("Authorization").split(" ")[1];
+  const decoded = jwtDecode(token);
+  const user = req.user;
+  const userEmail = user.email;
+
   const absolutePath = path.resolve("data", "recipe.json");
   const stats = fs.statSync(absolutePath);
 
@@ -11,7 +15,7 @@ const addRecipe = (req, res) => {
     // file is empty
     fs.writeFileSync(
       absolutePath,
-      JSON.stringify([{...req.body, recipeId: 1}])
+      JSON.stringify([{ ...req.body, recipeId: 1 }])
     );
     res.status(201).send("added first recipe");
     return;
@@ -24,6 +28,25 @@ const addRecipe = (req, res) => {
   const json = JSON.stringify(recipes); // Stringify the object back into JSON
   console.log(json);
   fs.writeFileSync(absolutePath, json); // Write the JSON data to the file
+
+  const parsedAllRecipesOfUsers = JSON.parse(
+    fs.readFileSync(path.resolve("data", "getAllRecipes.json"))
+  );
+  const latestRecipeId = recipes[recipes.length - 1].recipeId;
+
+  const particularUser = parsedAllRecipesOfUsers.find(
+    (obj) => obj.email === userEmail
+  );
+
+  particularUser.recipeIds.push(latestRecipeId);
+
+  const index = parsedAllRecipesOfUsers.indexOf(particularUser)
+
+  parsedAllRecipesOfUsers.splice(index, 1)
+  parsedAllRecipesOfUsers.splice(index, 0, particularUser)
+  const str = JSON.stringify(parsedAllRecipesOfUsers)
+  fs.writeFileSync(path.resolve("data", "getAllRecipes.json"), str)
+
   res.status(201).send("added recipe");
 };
 
@@ -92,4 +115,69 @@ const markAsFavRecipe = (req, res) => {
   res.status(200).send("mark as favorite done");
 };
 
-module.exports = { addRecipe, markAsFavRecipe };
+const getFavRecipes = (req, res) => {
+  const token = req.header("Authorization").split(" ")[1];
+  const decoded = jwtDecode(token);
+  const user = req.user;
+  console.log(user);
+
+  const userEmail = user.email;
+  const absolutePath = path.resolve("data", "favoriterecipe.json");
+
+  const favoriterecipes = fs.readFileSync(absolutePath);
+  const parsedFavRecipes = JSON.parse(favoriterecipes);
+
+  const particularUser = parsedFavRecipes.find(
+    (obj) => obj.email === userEmail
+  );
+
+  console.log(particularUser);
+
+  const ans = [];
+
+  const recipeIdsOfUser = particularUser.recipeIds;
+
+  for (const id of recipeIdsOfUser) {
+    const singleRecipe = JSON.parse(
+      fs.readFileSync(path.resolve("data", "recipe.json"))
+    ).find((obj) => obj.recipeId === id);
+    if (singleRecipe) {
+      ans.push(singleRecipe);
+    }
+  }
+
+  res.send(ans);
+};
+
+const getAllRecipes = (req, res) => {
+  const token = req.header("Authorization").split(" ")[1];
+  const decoded = jwtDecode(token);
+  const user = req.user;
+
+  const userEmail = user.email;
+  const absolutePath = path.resolve("data", "getAllRecipes.json");
+
+  const allRecipes = fs.readFileSync(absolutePath);
+  const parsedAllRecipes = JSON.parse(allRecipes);
+
+  const particularUser = parsedAllRecipes.find(
+    (obj) => obj.email === userEmail
+  );
+
+  const ans = [];
+
+  const recipeIdsOfUser = particularUser.recipeIds;
+
+  for (const id of recipeIdsOfUser) {
+    const singleRecipe = JSON.parse(
+      fs.readFileSync(path.resolve("data", "recipe.json"))
+    ).find((obj) => obj.recipeId === id);
+    if (singleRecipe) {
+      ans.push(singleRecipe);
+    }
+  }
+
+  res.send(ans);
+};
+
+module.exports = { addRecipe, markAsFavRecipe, getFavRecipes, getAllRecipes };

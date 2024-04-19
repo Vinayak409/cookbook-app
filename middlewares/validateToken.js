@@ -7,7 +7,7 @@ const validateToken = (req, res, next) => {
     if (err) {
       console.error("Token verification failed:", err.message);
     } else {
-      console.log("Decoded token : ", decoded);
+      // console.log("Decoded token : ", decoded);
       req.user = {
         email: decoded.email,
         password: decoded.password,
