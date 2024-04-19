@@ -18,9 +18,11 @@ const Login = () => {
       mode: "cors",
       headers: { "Content-Type": "application/json" },
     })
-      .then((response) => {
+      .then(async (response) => {
         // console.log(response.ok);
         if (response.ok) {
+          const resolvedResponse = await response.json()
+          sessionStorage.setItem('token', resolvedResponse.token)
           console.log("user logged in succesfully");
         }
       })
