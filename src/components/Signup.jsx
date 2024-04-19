@@ -20,8 +20,10 @@ const Signup = () => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(formData),
     })
-      .then((response) => {
+      .then(async (response) => {
         if (response.ok) {
+          const resolvedResponse = await response.json()
+          sessionStorage.setItem('token', resolvedResponse.token)
           console.log("User has been successfully signed up");
         }
       })
